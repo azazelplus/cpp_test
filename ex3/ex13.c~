@@ -1,0 +1,19 @@
+#include <stdio.h>
+
+int main(int argc, char* argv[]){
+	if(argc!=2){
+		printf("ERROR. You need one argument.\n");
+		return 1;
+	}
+
+	//arg[1]是用户传入的那个字符串命令。
+	for(i=0;argv[1][i])!='\0';i++){
+		char letter=argv[1][i];//取出命令的第i角标字母
+		
+		switch(letter){
+			case 
+		}
+
+		
+	}
+}
