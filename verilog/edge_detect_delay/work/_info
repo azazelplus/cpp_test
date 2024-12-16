@@ -1,0 +1,89 @@
+m255
+K4
+z2
+!s11f vlog 2020.4 2020.10, Oct 13 2020
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dF:/aza/code/verilog/edge_detect_delay
+T_opt
+!s110 1734319912
+VbLck3>F:H?V1>b[bg@kk50
+04 20 4 work tb_edge_detect_delay fast 0
+=1-f875a4eab75a-675f9f28-e1-740c
+o-quiet -auto_acc_if_foreign -work work +acc
+Z1 tCvgOpt 0
+n@_opt
+OL;O;2020.4;71
+vedge_detect_delay
+Z2 !s110 1734319902
+!i10b 1
+!s100 @8ab8;j;oJLliBRK4^:P@2
+Z3 !s11b Dg1SIo80bB@j0V0VzS_@n1
+Iej:]ZFhYSWRZa?JfKicj52
+R0
+Z4 w1734319171
+Z5 8F:/aza/code/verilog/edge_detect_delay/edge_detect_delay.v
+Z6 FF:/aza/code/verilog/edge_detect_delay/edge_detect_delay.v
+!i122 5
+L0 5 19
+Z7 VDg1SIo80bB@j0V0VzS_@n1
+Z8 OL;L;2020.4;71
+r1
+!s85 0
+31
+Z9 !s108 1734319902.000000
+Z10 !s107 F:/aza/code/verilog/edge_detect_delay/edge_detect_delay.v|
+Z11 !s90 -reportprogress|300|-work|work|F:/aza/code/verilog/edge_detect_delay/edge_detect_delay.v|
+!i113 0
+Z12 o-work work -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+R1
+vtb_edge_detect
+!s110 1734318424
+!i10b 1
+!s100 CS?2:;ELYTa3TBf8Nj;EE1
+R3
+IWR5GnFR9YOmFf]>0;WALh2
+R0
+w1734318330
+R5
+R6
+!i122 2
+Z13 L0 27 35
+R7
+R8
+r1
+!s85 0
+31
+!s108 1734318424.000000
+R10
+R11
+!i113 0
+R12
+R1
+vtb_edge_detect_delay
+R2
+!i10b 1
+!s100 h^KVBi?PK`O8fAIYU`c>X2
+R3
+IBZA:MS3z9LBizOV^hGP^52
+R0
+R4
+R5
+R6
+!i122 5
+R13
+R7
+R8
+r1
+!s85 0
+31
+R9
+R10
+R11
+!i113 0
+R12
+R1
