@@ -1,0 +1,73 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+dF:/aza/code_git/verilog/dff
+vslap
+Z0 !s110 1734420260
+!i10b 1
+!s100 ZEoZ9zSfBf?RY5`g`bD`10
+Io?83z=WJ[CDz1ZKKU4KX23
+Z1 VDg1SIo80bB@j0V0VzS_@n1
+Z2 dF:/aza/code_git/verilog/slap_test
+Z3 w1734419745
+Z4 8F:/aza/code_git/verilog/slap_test/slap_test.v
+Z5 FF:/aza/code_git/verilog/slap_test/slap_test.v
+L0 6
+Z6 OV;L;10.5b;63
+r1
+!s85 0
+31
+Z7 !s108 1734420260.000000
+Z8 !s107 F:/aza/code_git/verilog/slap_test/slap_test.v|
+Z9 !s90 -reportprogress|300|-work|work|-stats=none|F:/aza/code_git/verilog/slap_test/slap_test.v|
+!i113 1
+Z10 o-work work
+Z11 tCvgOpt 0
+vslap_b_to_a
+!s110 1734417314
+!i10b 1
+!s100 mY5fjITEVWm6bL=mTFfJ>1
+IiFRY1iXe4[8Jf0gWAhj4m3
+R1
+R2
+w1734417240
+R4
+R5
+L0 5
+R6
+r1
+!s85 0
+31
+!s108 1734417314.000000
+R8
+R9
+!i113 1
+R10
+R11
+vtb_slap
+R0
+!i10b 1
+!s100 9[fE_W00g=X8hI7GZ^a6d3
+IdL0zo4i[GUFT0FkDE8nn@3
+R1
+R2
+R3
+R4
+R5
+L0 24
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 1
+R10
+R11

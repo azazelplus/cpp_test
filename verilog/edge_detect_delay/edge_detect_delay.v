@@ -22,14 +22,12 @@ module edge_detect_delay (
 
 endmodule
 
-
 // Testbench 模块(未更改.)
 module tb_edge_detect_delay();
     reg clk;          // 生成时钟
     reg in;      
     wire pedge;     
-    
-	
+    	
     // 实例化被测试模块
     edge_detect_delay uut (
         .clk(clk),
@@ -56,6 +54,4 @@ module tb_edge_detect_delay();
         // 结束仿真
         $stop;
     end
-    
- 
 endmodule
