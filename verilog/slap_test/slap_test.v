@@ -51,7 +51,7 @@ module tb_slap();
 		#10 rst =0;//10s后解除rst, 仿真正式开始.
 		
 		//change b during 1st circle()
-		#15 in=1;//15ns时(第一个周期上沿)令in=1
+		#15 in<=1;//15ns时(第一个周期上沿)令in=1
 		#10 in=0;//25ns时(第二个周期上沿)令in=0
 		
 		
