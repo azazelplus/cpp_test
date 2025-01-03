@@ -1,25 +1,44 @@
-#include <stdio.h>
+#include <iostream>
+using namespace std;
+//void Sum(int*& array, int n);
+
+void Sum(int*& array, int n){//不允许int*& array, 会报错
+    int sum =0;
+    for(int i=0;i<n;i++){
+        sum+=*array;
+        array++;
+        cout<<array<<endl;
+    }
+    cout<<sum<<endl;
+}
+
+void NotChangeValue(int a)
+{a=5;}
+
+
+void ChangeValue(int &a)
+{a=5;}
 
 int main(int argc, char *argv[])
 {
-    int i = 0;
 
-    // go through each string in argv
-    // why am I skipping argv[0]?
-    for(i = 1; i < argc; i++) {
-        printf("arg %d: %s\n", i, argv[i]);
-    }
+    int a[10]={1,2,3,4,5,6,7,8,9,0};
+    cout<<a<<endl;
+    //cout<<&a[0]<<endl;
+    //cout<<&a<<endl;
+    Sum(a,10);
+    cout<<&a<<endl;
 
-    // let's make our own array of strings
-    char *states[] = {
-        "California", "Oregon",
-        "Washington", "Texas"
-    };
-    int num_states = 4;
+    // int b=3;
+    // NotChangeValue(b);
+    // cout<<b<<endl;
 
-    for(i = 0; i < num_states; i++) {
-        printf("state %d: %s\n", i, states[i]);
-    }
+    // int c=3;
+    // ChangeValue(c);
+    // cout<<c<<endl;
+
 
     return 0;
 }
+
+
