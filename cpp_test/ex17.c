@@ -1,3 +1,9 @@
+// 在这个练习中，你会在难度上做一个大的跳跃，并且创建出用于管理数据库的完整的小型系统。
+// 这个数据库并不实用也存储不了太多东西，然而它展示了大多数到目前为止你学到的东西。
+// 它也以更加正规的方法介绍了内存分配，以及带领你熟悉文件处理。
+// 我们使用了一些文件IO函数，但是我并不想过多解释它们，你可以先试着自己理解。
+
+//这个程序实现了一个简单的数据库操作系统，允许通过命令行进行数据库的创建、数据的存储、读取、修改和删除操作。
 #include <stdio.h>
 #include <assert.h>
 #include <stdlib.h>
@@ -5,9 +11,10 @@
 #include <string.h>
 
 
-#define MAX_DATA 512
-#define MAX_ROWS 100
+#define MAX_DATA 512	//name和email字符串的最大长度
+#define MAX_ROWS 100	//database中最多存储的Address数量
 
+//地址信息结构体
 struct Address{
 	int id;
 	int set;
@@ -16,7 +23,7 @@ struct Address{
 };
 
 
-
+//Database是数据库，它包含一个Address类型的数组rows，用于存储多个联系人记录，最多100个。
 struct Database{
 	struct Address rows[MAX_ROWS];//这是一个叫做rows的邮箱地址结构体数组.
 };
