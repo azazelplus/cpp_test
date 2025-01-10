@@ -1,0 +1,13 @@
+//静态成员函数访问非静态成员的方法
+
+#include <iostream>
+using namespace std;
+
+class Student{
+    static Student* pFirst; //首个学生的指针. 定义一个首个学生静态指针, 方便管理学生链表.
+    Student * pNext;        //每个学生对象都有一个指向下一个学生的指针成员. 
+    char name[20];
+
+    public:
+    
+};
