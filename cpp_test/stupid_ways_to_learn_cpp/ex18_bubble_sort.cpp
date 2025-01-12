@@ -2,7 +2,7 @@
 
 #include <iostream>
 #include <vector>
-#include <algorithm>//sort()函数. 原型: void sort (RandomAccessIterator first, RandomAccessIterator last, Compare comp);
+#include <cstring>
 #include <stdexcept>//提供标准异常类的定义. 例如std::invalid_argument
 #include <functional>//提供了一些模板类和函数对象, 用于函数对象的包装和函数对象的逻辑运算. 例如std::greater<T>和std::less<T>等.
 using namespace std;

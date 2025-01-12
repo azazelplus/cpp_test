@@ -42,6 +42,7 @@
         "string.h": "c",
         "stdio.h": "c",
         "stdlib.h": "c",
-        "static_fun": "cpp"
+        "static_fun": "cpp",
+        "list": "cpp"
     }
 }
