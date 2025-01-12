@@ -11,7 +11,7 @@ public:
     //int number;     //节点的编号(我们这个例子里不打算加入节点的序号了. 传统链表不需要编号, 如果编号的话维护起来有点麻烦. 删除等操作需要改动后面对象的编号, 凭空多了大量写入操作.)
     int data;       //节点的数据(这个数据要有唯一性...比如学号)
     Node* pNext;    //指向下一个节点的指针
-    Node(int num, int data) : data(data), pNext(nullptr){}     //构造函数. 初始化pNext为空指针, 准备在addNode()函数中具体设置为当前链表末端.
+    Node(int d) : data(d), pNext(nullptr){}     //构造函数. 初始化pNext为空指针, 准备在addNode()函数中具体设置为当前链表末端.
 };
 
 //链表类
@@ -23,7 +23,7 @@ private:
 public:
     LinkedList(): head(nullptr), length(0){}   //构造函数, 初始化空链表. 即只有一个指向null的指针.
     ~LinkedList(){
-        //同addNode(int data)函数, 也是用current指针遍历找到当前最后一个对象.
+        //同addNode(int data)函数, 也是用current指针遍历直到最后一个对象, 在循环中一个个删除node.
         Node* current=head;
         while(current!=nullptr){    //直到current指向空(指向最后一个对象并且再往前一步)为止
             Node* temp = current;   //temp保存上一个current的值
@@ -34,20 +34,19 @@ public:
     }
 
     //增: 在链表末尾添加一个Node. 返回值为是否成功.
-    bool append(int data){
-        Node* newNode = new Node(length, data);//分配堆内存创建了一个newNode, 作为链表的末端, 其pNext被初始化为nullptr是合理的.
+    void append(int data){
+        Node* newNode = new Node(data);//分配堆内存创建了一个newNode, 作为链表的末端, 其pNext被初始化为nullptr是合理的.
         length++;               //链表长度记录+1
         if(head == nullptr){
             head = newNode;     //如果链表为空, 直接将新节点设为头节点.
         }else{
             //建立一个Node* current, 用这个指针遍历到链表的末尾(只有链表末尾的那个Node的pNext是nullptr.)
-            Node* current;  
-            current->pNext=head;
-            while(current->pNext != nullptr){   //直到找到一个指向`其pNext==nullptr的对象`的指针, 这就是指向链表末尾Node的指针了.
-                newNode=newNode->pNext;         //如果current指针所指的对象的pNext不是nullptr, 说明这个对象不是链表最后一个对象.
+            Node* current = head;  
+            while(current->pNext != nullptr){   //直到current指向的Node是链表结尾.
+                current=current->pNext;         //如果current指针所指的对象的pNext不是nullptr, 说明这个对象不是链表最后一个对象.
             }
             //循环结束后, current是指向链表当前最后一个对象的指针. 我们要把这个对象的pNext从null指向我们创建的newNode, 完成append.
-            current->pNext=newNode; // 移动到下一个节点
+            current->pNext=newNode; 
         }
     }
 
@@ -67,7 +66,7 @@ public:
             Node* temp = head;
             head = head->pNext;     //改变当前链表头指针.
             delete temp;
-            cout<<"head node deleted."<<endl;
+            cout<<"head (`"<< val <<"`) node deleted."<<endl;
             return;
         }
 
@@ -78,7 +77,7 @@ public:
                 Node* temp=current->pNext;      //留存一下指向下一个对象的指针;(供删除用)
                 current->pNext=current->pNext->pNext;   //把current所指的对象的pNext往后接一位.
                 delete temp;
-                cout<<"a node deleted."<<endl;
+                cout<<"a node `"<< val <<"` deleted."<<endl;
             }else
                 current = current->pNext;   //move forward
         }
@@ -95,7 +94,7 @@ public:
                 current = current->pNext;   //move forward
             }
         }
-        cout<<"node not found."<<endl;
+        cout<<"node `"<< val <<"` not found."<<endl;
         return nullptr;
     }
 
@@ -117,7 +116,7 @@ public:
 
         //查找成功后修改值.
         Node_to_be_modified->data = newval;
-        cout<<"modification successful."<<endl;
+        cout<<"modification from `"<< oldval<<"` to `"<< newval <<"` successful."<<endl;
     }
 
 
@@ -146,7 +145,6 @@ int main(){
     list.append(1333);
     list.append(1);
 
-
     //print
     list.printList();
 
@@ -164,7 +162,7 @@ int main(){
 
     //find
     if(list.findValue(666))
-        cout<<"node found. the addr is"<<list.findValue(666)<<endl;
+        cout<<"node found. the addr is "<<list.findValue(666)<<endl;
 
     return 0;
 }

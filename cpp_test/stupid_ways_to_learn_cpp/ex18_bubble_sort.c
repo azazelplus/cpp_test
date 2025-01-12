@@ -1,10 +1,17 @@
-//
+//注意使用方法是在terminal中先编译好binary文件, 然后运行ex18_bubble_sort.exe 1 2 3 4 6 5
+
+
+//我们顺便在这个文件下学习有关预处理(cpp)的命令. 假设我们在windows cmd环境(vscode提供的terminal即为此.)
+//cpp(c preprocessor)是一个C/C++的预处理器程序. 它不是编译器本身，而是编译器的一部分，用于执行代码的预处理操作，例如宏展开、文件包含、条件编译等。
+//运行`cpp ex18_bubblesort.c` 会输出该文件经过预处理后的代码. cpp ex18_bubble_sort.c > preprocessed_output.c, 可以保存为一个文件观看.
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <errno.h>
 #include <string.h>
 
-//这是一个简单的错误处理函数. 
+//die()一个简单的错误处理函数. 
 //它基于库<errno.h>中的errno和perror()函数, 用于输出错误信息并终止程序.
 //errno是一个全局变量, 用于存储最近一次系统调用的错误代码.
 //如果errno值非0(发生了错误), 说明最近一次系统调用出现了错误.
@@ -32,7 +39,7 @@ int reverse_order(int a, int b){
     return a<b; //降序排列
 }
 
-//这是在干啥? 
+//奇怪排序. 这是在干啥? 
 int strange_order(int a, int b){
     if(a==0 || b==0) return 0;//如果a或b为0, 则返回0(即不交换).
     else return a%b;//否则返回a%b(即交换).
@@ -40,11 +47,15 @@ int strange_order(int a, int b){
 
 //一个经典的冒泡排序函数. 参数为一个int数组array; 一个int count(数组元素个数); 一个函数指针(用于比较两个整数的大小).
 //排序过程中, 比较相邻的两个元素, 如果它们不符合顺序(cmp(target[j], target[j+1]) > 0), 则交换它们的位置。
-//由于冒泡排序的基本思想是每一轮排序都会把当前最大（或最小）的元素“冒泡”到最后，因此排序总共需要进行 count 轮，每一轮会让一个元素确定位置。
-//最终返回一个排序好的数组指针. 这个数组储存在堆中, 需要手动释放.
+//由于冒泡排序的基本思想是第i轮排序都会把当前第i大(升序排序时)的元素“冒泡”到最后，因此排序总共需要进行 count 轮，每一轮会让一个元素确定位置。
+//最终返回一个排序好的数组指针. 这个数组储存在堆中, 需要手动释放. 
+//冒泡函数安放排序数据的数组放在堆中, 这是合适的: 因为堆不是短暂生命周期, 出了bubble_sort()也存在, 可以用返回的target指针访问排序好的内容.
 int* bubble_sort(int *array, int count, compare_cb cmp){
     
-    int *target = malloc(count*sizeof(int));//分配大小为数组array的内存. 返回数组开头指针target. 事实上最好在malloc前面显示转换类型, 即(int *)malloc(count*sizeof(int)); 这样可以避免更严格的编译器报错, 如g++.
+    int *target = (int*)malloc(count*sizeof(int));//分配大小为数组array的内存. 返回数组开头指针target. 事实上最好在malloc前面显示转换类型, 即(int *)malloc(count*sizeof(int)); 这样可以避免更严格的编译器报错, 如g++.
+
+    //用cpp的new实现更容易.
+    //int *target = new(count);
 
     if(!target) die("Memory error.");//(!target)等价于(target==NULL), 即分配内存失败.
 
@@ -88,7 +99,7 @@ void print_bubble(int *array, int count, compare_cb cmp){
 
 
 int main(int argc, char *argv[]){
-    if(argc<2) die("USAGE: bubble_sort 4 3 1 5 6");//linux命令行参数个数至少为2个(第一个参数是二进制程序名bubble_sort), 如果用户只输入了程序名没有跟参数, 则输出提示.(`ERROR: USAGE: bubble_sort 4 3 1 5 6`)
+    if(argc<2) die("USAGE: bubble_sort [array you wanna sort, like`1 3 5 2 4 6`]");//linux命令行参数个数至少为2个(第一个参数是二进制程序名bubble_sort), 如果用户只输入了程序名没有跟参数, 则输出提示.(`ERROR: USAGE: bubble_sort 4 3 1 5 6`)
 
 
     //先进行读取参数的工作. 
@@ -99,7 +110,7 @@ int main(int argc, char *argv[]){
 
     //remind: **inputs等价于*inputs[]
     char **inputs=argv+1;//inputs指向第一个参数(即第一个数值).
-    int *array=malloc(count*sizeof(int));
+    int *array=(int*)malloc(count*sizeof(int));
     if(!array) die("Memory error.");
     //atoi()函数用于将字符串转换为整数. 原型: int atoi(const char *nptr);
     for(int i=0; i<count; i++){

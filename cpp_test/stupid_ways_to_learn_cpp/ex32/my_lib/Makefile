@@ -1,0 +1,1 @@
+#这是我的库`my_lib`的Makefile.
