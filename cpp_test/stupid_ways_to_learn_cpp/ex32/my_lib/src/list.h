@@ -1,12 +1,15 @@
 //这是我写的一个双向链表的头文件, 定义了链表及其相关的操作接口。
+//具体来说, 定义了:
+//
 //使用方法:#include "list.h"
 
 
-
+//常见的防止重复包含的手段, 定义一个空宏名.
 #ifndef my_lib_lish_h
 #define my_lib_lish_h
 
 #include <stdlib.h>
+
 
 struct ListNode;    //声明ListNode结构体
 
@@ -21,17 +24,16 @@ typedef struct ListNode{
 
 typedef struct List{
     int count;
-    ListNode* first;
-    ListNode* last;
+    ListNode* first;    //指向列表第一个node
+    ListNode* last;     //指向列表最后一个node
 } List;
 
 
-//声明一些方法.(c没法用成员函数, 只好这样了)
-List* List_creat();
+//声明一些List方法.(c没法用成员函数, 只好这样了)
+List* List_create();
 void List_destory(List* List);
 void List_clear(List* List);
-void List_clear_destory(List* List)
-;
+void List_clear_destory(List* List);
 
 
 //宏定义. 宏可以简单理解为`文本替换`, 把`List_count(A)`替换为`(A)->count`. 在宏定义中使用(), 目的是在以后出现含有额外参数的用法中, 保证运算优先级. 
@@ -41,13 +43,12 @@ void List_clear_destory(List* List)
 #define List_first(A) ((A)->first != NULL ? (A)->first->value : NULL)
 #define List_last(A) ((A)->last != NULL ? (A)->last->value : NULL)
 
-//又是声明一些方法.
+
+//又是声明一些List方法.
 void List_push(List* list, void* value);
 void* List_pop(List* list);
-
 void List_unshift(List* list, void* value);
 void* List_shift(List* list);
-
 void* List_remove(List* list, ListNode *node);
 
 
