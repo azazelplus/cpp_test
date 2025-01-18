@@ -15,7 +15,7 @@ List *List_create(){
 
 
 //free list structure memory. 释放链表结构内存.
-void List_destory(List* list){
+void List_destroy(List* list){
     ListNode* current=list->first;
     ListNode* next=NULL;
 
@@ -42,9 +42,9 @@ void List_clear(List* list){
 
 
 //free list.    结合上述两个函数, 同时释放链表结构和其节点储存的数据的内存.
-void List_clear_destory(List* list){
+void List_clear_destroy(List* list){
     List_clear(list);
-    List_destory(list);
+    List_destroy(list);
 }
 
 
