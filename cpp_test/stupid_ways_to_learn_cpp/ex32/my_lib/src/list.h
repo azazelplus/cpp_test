@@ -31,9 +31,9 @@ typedef struct List{
 
 //声明一些List方法.(c没法用成员函数, 只好这样了)
 List* List_create();
-void List_destory(List* List);
+void List_destroy(List* List);
 void List_clear(List* List);
-void List_clear_destory(List* List);
+void List_clear_destroy(List* List);
 
 
 //宏定义. 宏可以简单理解为`文本替换`, 把`List_count(A)`替换为`(A)->count`. 在宏定义中使用(), 目的是在以后出现含有额外参数的用法中, 保证运算优先级. 
