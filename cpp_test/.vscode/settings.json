@@ -43,6 +43,9 @@
         "stdio.h": "c",
         "stdlib.h": "c",
         "static_fun": "cpp",
-        "list": "cpp"
+        "list": "cpp",
+        "list_algos.h": "c",
+        "assert.h": "c",
+        "minunit.h": "c"
     }
 }
