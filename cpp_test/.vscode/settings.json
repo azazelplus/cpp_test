@@ -46,6 +46,7 @@
         "list": "cpp",
         "list_algos.h": "c",
         "assert.h": "c",
-        "minunit.h": "c"
+        "minunit.h": "c",
+        "list.h": "c"
     }
 }
