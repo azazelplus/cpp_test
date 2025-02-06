@@ -1,0 +1,104 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>css_box_model_demo</title>
+    <style>
+        #box1{
+            background-color: aqua;
+            display: inline-block;/*把div块转换为行内块元素*/
+            border: 10px solid yellowgreen ;/*border即盒子的边界. 这个复合属性(即一个属性有序接受多个属性值, 不要求顺序会自动匹配)设置边框的大小, 样式, 填充颜色.*/
+        }
+
+        
+        #box2{
+            background-color: yellow;
+            width: 300px;
+            height: 300px;
+            color: red; /*color指的是字体color别忘了*/
+            /*👇也可以不用`border:`复合属性, 展开来设置border的特性.*/
+            border-style: solid;
+            border-width: 20px 0 30px 0;/*上边框-右边框-下边框-左边框(顺时针). 如果没给全, 只给一个则四个边框都用这个, 只有三个则为上-左右-下, 只有两个则上下-左右*/
+            border-color: violet
+
+        }
+
+        #box3{
+            background-color: white;
+            width: 50px;            /*事实上border有上下左右四个边框也是符合属性. 你可以用border-left*/
+            
+            /*padding属性描述了文字和边框之间的间隔.*/
+            padding-left: 50px;
+            padding-right: 50px;
+
+            /*margin属性描述了整个box元素之间的距离.*/
+            margin: 40px;   /*这里把-top, -right, -bottom, -left都设置为40px.*/
+        }   
+    </style>
+</head>
+<body>
+    
+    <h1>css盒子模型</h1>
+    <img src="box model.png" alt="">
+
+    <table>
+        <tr>
+            <th>属性名</th><!--th为table head, 表示这一行是表头, 会加粗字体.-->
+            <th>说明</th>
+        </tr>
+        <tr>
+            <td>内容 (Content)</td>
+            <td>盒子包含的实际内容，比如文本、图片等。</td>
+        </tr>
+        <tr>
+            <td>内边距 (Padding)</td>
+            <td>围绕在内容的内部，是内容与边框之间的空间。可以使用 <code>padding</code> 属性来设置。</td>
+        </tr>
+        <tr>
+            <td>边框 (Border)</td>
+            <td>围绕在内边距的外部，是盒子的边界。可以使用 <code>border</code> 属性来设置。</td>
+        </tr>
+        <tr>
+            <td>外边距 (Margin)</td>
+            <td>围绕在边框的外部，是盒子与其他元素之间的空间。可以使用 <code>margin</code> 属性来设置。</td>
+        </tr>
+    </table>
+
+    <h2>练习:一个盒子模型</h2>
+
+    <div id="box1" >
+        azazel's box1
+    </div>
+    <hr><hr><hr>
+    <div id="box2" >
+        azazel's box2
+    </div>
+    <hr><hr><hr>
+    <div id="box3" >
+        azazel's box3
+    </div>
+
+
+
+
+
+</body> 
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

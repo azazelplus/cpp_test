@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>different types of css selector demo</title>
+
+    <style>
+        h2{
+            color:aqua; /*这是一个h2标签择器.*/
+        }
+
+        .need_highlight{
+            background-color: yellow; /*这是一个need_height类选择器. `.`开头表示类名*/
+        }
+
+        #myheader{
+            font-style: oblique;/*这是一个id选择器. `#`开头表示id名*/
+        }
+
+        *{
+            font-size: 30px;    /*这是一个通用选择器.*/
+        }
+
+        #father > p{
+            color: red;     /*这是一个子元素选择器1. 格式为[父元素标签名/#id名/.class名] > [子元素标签名/#id名/.class名] 注意子元素选择器不对孙子, 重孙子元素生效. 想要对所有后代生效要用后代选择器.*/
+        }
+
+        .fathers > #myp{
+            color: orange;  /*这也是一个子元素选择器2.*/
+        }
+
+        .fathers p{
+            background-color: orange;   /*这是一个后代选择器. *相比子元素选择器, `>`换为空格即可.*/
+        }
+
+        #summer + p{
+            color: red;/*这是一个相邻元素选择器. 格式为 元素1 + 元素2{rules;} 其中元素1和元素2必须是同级元素. 将会给元素2添加规则.*/
+        }
+
+        #winter:hover{
+            color: red;/*这是一个检测hover的伪类选择器.冒号后面还有很多其他keyword用法.*/
+        }
+
+        #isfirst:first-child{
+            color: red;/*该伪选择器当目标#isfirst是某个父类的第一个子类时才生效.*/
+        }
+
+
+
+
+        /*双冒号为伪元素选择器.*/
+    </style>
+
+
+
+
+</head>
+<body>
+    <h1>-----</h1>
+
+    <h2>h2标签选择器生效(aqua色)</h2>
+
+    <h3 class="need_highlight">need_highlight类选择器生效.(highlight)</h3>
+
+    <h3 id="myheader">myheader id选择器生效.(oblique font)</h3>
+
+    <h3>通用选择器(20px大字体)已生效.</h3>
+
+<hr><hr>
+
+    <div id="father">
+        <p>子元素选择器1已生效.(red)</p>
+    </div>
+
+<hr><hr><hr>
+
+    <div class="fathers">
+        <p id="myp">子元素选择器2已生效.(orange)</p>
+        <div class="grandson">
+            <p>子元素选择器2 未对孙子元素生效! (orange)</p>
+            <p>后代选择器对孙子元素生效.(background color: orange)</p>
+        </div>
+    </div>
+
+<hr><hr><hr>
+
+    <h3 id="summer">这是一个id="summer"的h3元素. 紧跟它的下一个p元素将会被兄弟选择器h3+p作用为红色.</h3>
+    <p>#summer+p兄弟选择器已生效.</p>
+
+<hr><hr><hr>
+
+    <h3 id="winter">鼠标悬停在此会使#winter:hover伪类选择器生效(red). <p id="isfirst">这是h3(#winter)的第一个子元素p(#isfirst).伪选择器#isfirst:first_child已生效(reed)</p> <p id="issecond">这是h3(#winter)的第二个子元素p(#issecond.</p></h3>
+
+</body>
+</html>

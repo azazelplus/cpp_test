@@ -103,8 +103,18 @@ inline List *List_merge(List *left, List *right, List_compare cmp){
 
 
 
+//merge sort归并排序.
+//首先, 归并两个已经排好序的链表是易于做到的.
+//现在把要排序的链表看为`list_count个已经排好序的单元素链表`, 然后不断两两归并它们组合成原链表, 即完成了原链表的排序.
+//时间复杂度O(NlogN)(排序轮数为logN), 空间复杂度O(N).
+
+//可以用自底向上的思想完成merge_sort函数, 即递归:
+//假设原链表砍成两个链表, 两个链表已经是有序的, 那麽只需要归并它们.
+//然而left还不是有序的, 所以要再砍成两个链表, 如果它们已经有序, 只需要归并它们...
+//直到切割到最后得到单元素或者空链表, 此时一定有序. 
+
 List *List_merge_sort(List *list, List_compare cmp){
-    if(list_count(list) <= 1)      //无需排序
+    if(list_count(list) <= 1)      //当链表长度为1时无需排序. 这也即递归的终止条件: 把list不断
         return list;
     
     //把当前列表一分为二.
@@ -120,10 +130,11 @@ List *List_merge_sort(List *list, List_compare cmp){
         middle--;
     }
 
-    //递归
+    //递归.即不断把当前列表一分为二, 直到
     List *sort_left = List_merge_sort(left, cmp);
     List *sort_right = List_merge_sort(right, cmp);
 
+    //释放一下递归的temp的内存, 防止内存泄漏
     if (sort_left != left) List_destroy(left);
     if (sort_right != right) List_destroy(right);
 

@@ -1,0 +1,248 @@
+<!--
+
+一个html文档由多对标签(元素)组成. 一对标签即`<tagname> content </tagname>`. 也存在自闭合标签, 它单独构成一对标签(元素), 如`<br>`
+属性:
+    标签可以有多个`属性`: <tagname 属性名="属性值">
+    注意`属性名`不区分大小写.
+    一些几乎所有标签都拥有的属性:
+        class 为元素定义一个类名
+        id      给该元素定义一个唯一的id
+        style   规定该元素的样式
+
+        href(h reference)显然是<a>的属性. 超链接地址.
+
+        target是<a>的属性, 定义超链接的打开方式. 属性值有
+            _blank 在新标签页打开;
+            _parent 在父窗口打开;
+            _top 在顶层窗口打开;
+            _self 默认. 在当前标签页打开.
+
+        src是<img>的属性. 定义要现实的图片的路径(相对/绝对)或url
+
+        alt是<img>的属性, 定义显示失败后要输出的文本.   
+        width和height是<img>的属性. 设置图片大小.
+
+
+
+
+
+常用标签有:
+    段落标签
+        <p> 这是一个段落 </p>
+
+    标题标签(h1~h6)
+        <h1> 这是一个标题 </h1>
+
+    a(anchor)标签用于创建链接. 用户点击content就会自动跳转.
+        <a herf="https://www.example.com"> 这是一个超链接请点击 </a>
+        特别地,herf="#"时, 表示一个`空链接`, 点击后不会进行跳转. 通常用于占位符(js监听点击事件)或动态链接(js绑定事件后才会跳转), 一般配合js使用, 例如<a href="#">返回顶部</a>
+        可以加入target参数.
+            <a href="https://www.example.com" target="_blank">在新标签页打开</a>
+        
+    换行标签
+        <br>
+    水平分割线标签
+        <hr>
+
+    两个常见`容器`标签. 他们一般和css, js配合使用.
+        div标签. 是一个块级标签.它没有任何语义, 就是创建一个块儿. 用来把一些元素包装起来.
+        span标签.是一个行级标签.他没有任何语义, 就是创建一行.  用来把一坨文本元素包装起来, 好使用css js样式之类的.
+
+
+表单
+        使用form标签实现.    
+
+
+
+块元素(block)(块级标签), 行内元素(inline)(行级标签), 行内块元素(inline-block)
+    块元素在浏览器界面占据一行. 是独立的内容块. 如段落, 标题,  表格
+    如<div>, <hr>, <br>
+
+    行内元素在同一行内呈现.
+    如<span>, <p>
+
+    行内块元素水平排列, 但是可以设置宽度高度内外边距等块元素属性. 可以包含其他行元素/块元素.
+    如<img>
+    
+    三种display方式可以进行转换. <span display: block> xxx <span>可以实现把span元素看作块元素, 可以设置width等.
+
+
+html文档标签结构:
+    一个html文档第一行是自闭合标签`<!DOCTYPE html>`, 表示文档类型是html
+    然后需要一个<html>标签. 所有文档内容都在该标签里. <html>标签也称为`根元素`. 它是最外层结构.
+    然后是:
+        <head>标签对
+            文档头部. 包含文档元信息(metadata), 它不会直接显示在网页上. 如编码格式, 标题, 外部样式css, js文件
+            
+        <body>标签对.
+            实际显示在浏览器页面的内容. 文本/图像/链接...
+
+-->
+
+
+<!DOCTYPE html>
+<html lang="en">                    <!--表示当前HTML文档语言为english. zh-CH简体中文; zh-TW繁体中文, de德语, fr法语, ja日语...-->
+<head>
+    <meta charset="UTF-8">          <!--meta标签用于指定各种元信息. charset属性指定网页的字符编码为UTF-8. UTF-字符集支持所有语言, 兼容性最好.-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"><!--meta的viewport属性提供一个页面的简短描述(不是title哦), 主要是影响搜索引擎. content属性控制网页在移动设备上的显示方式.width=device-width让网页宽度和设备屏幕宽度一致.(没有这个的话手机访问网页会缩小到PC版本大小) initial-scale=1.0初始缩放比例为1.0, 即不缩放.-->
+    <title>cat's webpage</title> <!--定义网页标题. 标题会显示在浏览器标签栏上. 同时影响SEO. 搜索引擎会使用`title`作为标题.-->
+    
+    <!--style标签内可以输入css代码.当然这很丑, 可以用link标签外部链接css文档. 注意style的优先级最高.-->
+    <style>
+        p{
+            color: yellowgreen;
+            font-size: 16px;
+        }
+    </style>
+
+    <!--link是单标签. 链接一个指定地址的外部css文档.-->
+    <!--属性rel="stylesheet"表示这是一个css类型的文件. herf指定路径.-->
+    <link rel="stylesheet" href="demo.css">
+</head>
+
+
+
+<body>
+    <h1>这是一个1级标题</h1>
+    <h2>这是一个2级标题</h2>
+    <h3>这是一个3级标题</h3>
+    <h4>这是一个4级标题</h4>
+    <h5>这是一个5级标题</h5>
+    <h6 style="color:red;">这是一个6级标题而且设置内联样式为红色.</h6>
+
+<hr><hr>
+    <h1>好了开始了</h1>
+    <p>
+        这是第一段!
+    
+
+    
+        <b>b是加粗标签</b>
+    
+
+    
+        <i>i是斜体标签</i>
+    
+
+    
+        <u>u是underline标签</u>
+    
+
+    
+        <s>是strikethrough标签(删除线)</s>
+    
+    </p>
+
+<!--ul(unorganized list)是无序列表标签. 里面的每个列表元素是li(list)标签.-->
+    <ul>
+        <li>无序列表元素1</li> 
+        <li>无序列表元素2</li>
+        <li>无序列表元素3</li>
+    </ul>
+
+<!--ol(organized list)是有序列表标签.-->
+<ol>
+    <li>有序列表元素1</li> 
+    <li>有序列表元素2</li>
+    <li>有序列表元素3</li>
+</ol>
+
+<!--table是表格标签.其子标签为很多个tr(table row), 每个tr内有多个td(table data) -->
+<table >
+    <tr>
+        <td>a11</td>
+        <td>a12</td>
+        <td>a13</td>
+    </tr>
+
+    <tr>
+        <td>a21</td>
+        <td>a22</td>
+        <td>a23</td>
+    </tr>
+
+    <tr>
+        <td>a31</td>
+        <td>a32</td>
+        <td>a33</td>
+    </tr>
+</table>
+
+<hr><hr>
+<!--插入图片-->
+<p>👇插入一张图片.</p>
+<img src="demo_img.jpg" alt="啊不知道为何显示失败了." width="50" height="50">
+
+
+
+<!--a标签-->
+<p></p>
+<a href="https://google.com" target="_self">点我</a>
+
+
+<!--
+用form创建`表单`. 它用于包裹用户输入的内容, 比如文本框和按钮. 
+    
+    form标签有[属性]    
+        action="url". 它决定表单提交时数据要发送到哪里. 通常是一个url.  
+        method="POST"或"GET" 表示提交方式是提交数据还是获取数据.
+    form内有多个特色[标签]可以使用. 
+        [单标签]input. 用于描述表单里的输入项. 它有多个属性:
+            type.  ="text"表示以文本形式发送用户输入.
+            placeholder="请输入内容"     用来填写一些在文本框中显示的灰色内容, 用户输入内容后提示消失.
+            value="默认"          同placeholder, 只是这里的文本是真的预先填进去的, 不是灰色的提示.
+
+
+
+
+
+
+-->
+<hr><hr>
+<p>创建一个表单.</p>
+<hr><hr>
+<form action="example.com"><!--action属性设置了表单内容要发送给的地址-->
+    <label for="username">username:</label><!--label的for属性用来绑定一个元素(一般是input)的id. 绑定后, 一来程序员便于阅读代码, 二来在界面点击这个label会自动跳转到绑定的那个input元素的文本框输入, 提高用户体验.-->
+    <input id="username" placeholder="please input something">
+    
+    <br><br>
+    
+    <label for="password">password:</label>
+    <input id="password" placeholder="please input password"><!--密码的input元素直接设置type="password". password属性值专为输入密码设计. 提供***屏蔽效果.-->
+
+
+    <br><br>
+
+    <label>gender: </label>
+    <input type="radio" name="gender"> male <!--radio即单选框. name="gender"属性用来设置表单数据的[字段名]. 表单提交时, 该项input元素会把`gender=xxx`的格式发给form的action属性指向的服务器.-->
+    <input type="radio" name="gender"> female
+    <input type="radio" name="gender"> others
+
+
+    <br><br>
+
+    <label>hobby</label>
+    <input type="checkbox" name="hobby">singing <!--checkbox属性值即复选框.-->
+    <input type="checkbox" name="hobby">dancing
+    <input type="checkbox" name="hobby">rap
+    <input type="checkbox" name="hobby">basketball
+
+
+    <!--input最重要的一种便是type="submit", 生成一个提交按钮. 此时既然不是text属性值, 不需要编辑文本, 用value属性设置一个按钮内的文字用于提示.-->
+    <input type="submit" value="submit">
+
+</form>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,54 @@
+/* css即cascading style sheets, 层叠样式表. */
+/* html是网页骨架, css是装修. */
+
+
+/* 
+css文档由多个`选择器`组成. 每个选择器拥有多个`属性="属性值"`. 
+即:
+
+
+包括:
+    元素选择器
+    类选择器
+    id选择器
+    通用选择器
+    子元素选择器
+    后代选择器(包含选择器)
+    并集选择器(兄弟选择器)
+    伪类选择器
+*/
+
+/* 例如下面是一个p标签选择器. 应用这个p标签选择器, 会选中页面所有p标签并且设置其内容为选择器内的形式. */
+p{
+    color: yellowgreen;
+    font-size: 25px;
+}
+
+/* 
+css导入html文档的三种方式:
+    1.内联样式inline styles         即在特定元素内用style属性.
+    2.内部样式表internal stylesheet 即在head内用<style>
+    3.外部样式表external stylesheet 即在head内用<link>. 
+*/
+
+    
+/* 优先级: 内联样式>内部样式>外部样式.
+    如果某个样式声明中使用了 !important，它的优先级会高于其他普通样式，无论它是通过 <style> 还是 <link> 引入的。例如：
+    p {
+        color: red !important;
+    }
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
