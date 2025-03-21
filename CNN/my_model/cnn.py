@@ -47,7 +47,7 @@ class simpleCNN(nn.Module):
         # nn.Sequential是pytorch中的一个容器(container, torch.nn中的一个类.) 它实际上是一个神将网络层的list. 用于将多个nn.Module组合成一个网络.
         # pytorch.nn还提供其他几个常用的容器, 如nn.Sequential(线性按顺序执行多个层), nn.ModuleList(存储多个层但需要手动调用), nn.ModuleDict(用字典存储多个层, 也需要手动调用).
         self.features = nn.Sequential(
-            # 括号内部是nn.Sequential的构造函数的参数列表. nn.Sequential类的对象僵毁按照顺序执行这些层.
+            # 括号内部是nn.Sequential的构造函数的参数列表. nn.Sequential类的对象将会按照顺序执行这些层.
             # n.Conv2d()是类nn.Conv2d的构造函数. 构造一个卷积层. 有构造参数: in_channels, out_channels, kernel_size, stride, padding.
             # 此处输入彩色RGB图像, 所以in_channels=3. 输出16个通道(有16个不同的卷积核同时处理数据), 输出16个特征图. 所以out_channels=16. 卷积核大小为3x3, 步长为1, padding为1.
             nn.Conv2d(3,16,kernel_size=3,stride=1,padding=1), # S=1, P=1,可以保持输出的特征图的尺寸不变.(称为等宽卷积)
