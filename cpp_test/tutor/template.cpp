@@ -1,5 +1,5 @@
 //template是cpp用于编写通用代码的机制. 
-//语法: template <typename MyType> 其中`T`是用户自己起的, `template` `typename`都是关键字. 后面跟一个函数/类的定义.
+//语法: template <typename MyType> 其中`MyType`是用户自己起的, `template` `typename`都是关键字. 后面跟一个函数/类的定义.
 //template <typename MyType>只会使紧随其后的第一个函数/类的内容成为模板. 要声明多个函数/类模板, 需要多次使用template <typename MyType>.
 
 #include <iostream>
