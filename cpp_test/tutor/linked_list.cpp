@@ -1,6 +1,20 @@
 //链表由一个个节点(node)类组成.
 //一个class node有两个必须部分: `储存的数据`和`指向下一个node的指针`.
 //同时, 一般会给Node类一个static指针, 指向第一个对象.
+
+
+//我感觉经典的链表结构很不方便在链表尾操作,需要遍历来移动到链表尾, 而双向链表我感觉没必要? 你说为啥我们同时有一个topnode和一个bottomnode呢?这样会不会方便很多? 有机会试一试...看起来很简单.
+
+
+
+
+//这个链表类有丰富的方法, 有append, delete, find, modify, push, pop. 它完全可以当成一个stack, 一个pile, 一个queue, 或者其他数据类型.
+//比如它可以看成stack: push(栈顶看为链表头部插入), pop(删除链表头节点), top(读取头节点值).
+//也可以看成queue: push(栈顶看为链表头部插入), pop(删除链表尾节点), top(读取头节点值).
+
+
+
+
 #include <iostream>
 #include <iomanip>//用于输入输出流的格式化.
 using namespace std;
@@ -33,10 +47,12 @@ public:
 
     }
 
+
     //增: 在链表末尾添加一个Node. 返回值为是否成功.
     void append(int data){
         Node* newNode = new Node(data);//分配堆内存创建了一个newNode, 作为链表的末端, 其pNext被初始化为nullptr是合理的.
         length++;               //链表长度记录+1
+
         if(head == nullptr){
             head = newNode;     //如果链表为空, 直接将新节点设为头节点.
         }else{
@@ -69,6 +85,7 @@ public:
             cout<<"head (`"<< val <<"`) node deleted."<<endl;
             return;
         }
+
 
     //遍历(head之外的)链表.
         Node* current = head;
@@ -129,6 +146,36 @@ public:
         }
         cout<<endl;
     }
+
+
+
+
+
+
+
+    //push: 在链表头部插入一个节点.
+    void push(int data){
+        Node* newNode = new Node(data);
+        newNode->pNext = head; //新节点的pNext指向当前链表头
+        head = newNode; //头指针指向新节点
+        length++;
+    }
+
+    //出栈: 删除链表头节点.
+    int pop(){
+
+        if(!head){
+            cout << "error" << endl;
+            return 0; //栈空, 无法出栈.
+        }else {
+            cout << head->data << endl;
+            Node* temp = head; //保存当前节点
+            head = head->pNext; //头指针指向下一个节点
+            delete temp;
+        }
+    }
+    
+
 };
 
 

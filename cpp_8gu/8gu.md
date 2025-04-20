@@ -6,6 +6,21 @@
 
 # 1. 输入输出
 
+* cin >> x 遇到空格、换行符（\n）、制表符（\t）都会停下来.
+* 读取一行完整的输入:`getline(cin, x)`. 只在`\n`处才会停下来. (在<string>头文件)
+* ASCII中, char数字转换为int数字: 减掉一个`0`即可.
+  ```cpp
+  char ch = '2'; int x = ch - '0';  // x 现在就是 2 了！
+  ```
+
+* 移除字符串中的所有空格:
+*   ```cpp
+    #include <algorithm>
+    // 移除所有空格
+    input.erase(remove_if(input.begin(), input.end(), ::isspace), input.end());
+    ```
+
+
 ## 1.1 `cout>>x`和`cin<<x`实际上是istream&类型!
 
 👉 `cin >> a >> b` 其实是一个表达式！
@@ -332,3 +347,337 @@ int main() {
     return 0;
 }
 ```
+
+
+## 1.4 数字格式
+
+### 1.4.1 保留小数位数
+单组_保留小数位数
+给定一个小数 n ，请你保留 3 位小数后输出。
+如果原来的小数位数少于 3 ，需要补充 0 。
+如果原来的小数位数多于 3 ，需要四舍五入到 3 位。
+
+输入描述：
+第一行有一个小数 n。
+输出描述：
+输出一个小数，保留 3 位。
+
+示例1
+
+输入例子：
+1.23
+输出例子：
+1.230
+
+示例2
+
+输入例子：
+114.514
+输出例子：
+114.514
+
+```cpp
+//使用<iomanip>(io manipulate, 输入输出控制器)提供的丰富功能可以轻松实现.
+#include <iostream>
+#include <iomanip>
+using namespace std;
+
+int main(){
+    double n; cin>>n;
+    cout<<fixed<<setprecision(3)<<n<<endl;
+    //fixed     用小数点后固定位数来输出
+    //setprecision(x)   保留x位小数,自动四舍五入
+
+    //当然也可以使用printf格式控制字符串:
+    printf("%.3f\n",n);//注意这样的printf是存在四舍五入的!
+
+    //如果不想四舍五入呢?
+    cout <<fixed<<setprecision(3)//fixed表示固定保留你设置的位数而不使用科学计数法. setprecision(3)表示保留三位小数, 如果有多位则四舍五入
+    << floor(n*1000)//先*1000让n的小数点右移三位, 然后剩下的小数点是我们不需要的, 用floor向下取整割掉.
+    /10000
+    <<endl;
+}
+```
+
+### 1.4.2 补充前导0
+单组_补充前导零
+给定一个正整数 n ，请你保留 9 个数位，然后输出。
+如果数位少于 9 个，那么需要补充前导零。
+
+输入描述：
+第一行有一个整数 n\ (\ 1 \leq n \lt 10^9\ ) 。
+输出描述：
+输出一个数字，保留 9 个数位。
+
+示例1
+输入例子：
+123
+输出例子：
+000000123
+
+示例2
+输入例子：
+123456789
+输出例子：
+123456789
+
+```cpp
+//使用<iomanip>(io manipulate, 输入输出控制器)提供的丰富功能可以轻松实现.
+#include <iostream>
+#include <iomanip>
+#include <cmath>//floor()向下取整函数. 在c中也有, 在<math.h>中定义.
+using namespace std;
+
+int main(){
+    int n; cin >> n;
+    cout << setw(9)// [输出宽度下限] 设定为9(输出宽度: 要占用多少个字符. 注意, 如果是浮点数, 小数点也是占一个字符的!)
+    << setfill('0')// 配合setw()使用, 设定填充字符为0.
+    << n
+    << endl;
+}
+```
+### 1.4.3 计算圆面积
+给定一个圆的半径 r ，请你求出该圆的面积。
+保证半径 r 是整数。
+如果你的答案和标准答案的误差不超过 10−3，即可通过本题。
+
+输入描述：
+第一行有一个整数 n 。
+输出描述：
+输出一个数字，代表圆的面积。
+
+示例
+输入例子：
+123
+输出例子：
+47529.155256
+
+```cpp
+#include <iostream>
+#include <cmath>
+#include <iomanip>
+
+using namespace std;
+
+int main() {
+    double r;
+    cin>>r;
+    double s = r*r * acos(-1);  //用r*r比pow(r)要快很多哦.
+    cout<<fixed    //fixed只是改变浮点数的显示方式,不改变精度.
+    << setprecision(15)<<//显示15位有效数字. fixed搭配时, 表示15位小数点后数字. 这差不多是double能提供的精度榨干了.
+    s<<endl;
+}
+```
+
+
+
+
+# 2.数据结构
+
+## 2.1 栈
+
+### 2.1.1 实现一个栈
+请你实现一个栈。
+操作：
+push x：将x加x 入栈，保证 x为 int 型整数。
+pop：输出栈顶，并让栈顶出栈
+top：输出栈顶，栈顶不出栈
+输入描述：
+第一行为一个正整数 n ，代表操作次数。(1≤n≤100000)
+接下来每行为一个字符串 (加上一个要操作的数字)，代表一个操作。保证操作是题目描述中三种中的一种。
+push 1就是把1push进去.
+
+输出描述：
+如果操作为push，则不输出任何东西。
+如果为另外两种，若栈为空，则输出 "error“
+否则按对应操作输出。
+
+示例1
+输入：
+6
+push 1
+pop
+top
+push 2
+push 3
+pop
+
+输出：
+1
+error
+3
+
+```cpp
+#include <iostream>
+#include <cmath>
+#include <iomanip>
+
+using namespace std;
+
+
+//先实现一个链表, 然后提供push(栈顶看为链表头部插入), pop(删除链表头节点), top(读取头节点值), 于是这样就变成一个stack了!
+
+class Node{
+    public:
+    int data;
+    Node* pNext;
+
+    Node(int d): data(d), pNext(nullptr){} //构造函数. 
+};
+
+
+class Stack{
+    private:
+    Node* head;
+    int length;
+    public:
+    Stack(): head(nullptr), length(0){} //构造函数, 初始化空链表. 
+    ~Stack(){
+        Node* current = head;
+        while(current!=nullptr){
+            Node* temp = current;
+            current = current->pNext;
+            delete temp;
+        }
+    }
+
+    //入栈: 在链表头加一个节点.
+    void push(int data){
+        Node* newNode = new Node(data);
+        newNode->pNext = head; //新节点的pNext指向当前链表头
+        head = newNode; //头指针指向新节点
+        length++;
+    }
+
+    //出栈: 删除链表头节点.
+    int pop(){
+
+        if(!head){
+            cout << "error" << endl;
+            return -1; //栈空, 无法出栈.
+        }else {
+            cout << head->data << endl;
+            Node* temp = head; //保存当前节点
+            head = head->pNext; //头指针指向下一个节点
+            delete temp;
+        }
+        return 0; 
+    }
+    
+    //读取栈顶元素: 返回链表头节点的值.
+    void top(){
+        if(!head){
+            cout<<"error"<< endl;
+        }else{
+            cout << head->data<< endl;
+        }
+    }       
+};
+
+
+int main() {
+    Stack s;
+    int n; cin >> n;
+    while(n--){
+        string command; cin >> command;
+
+        if(command == "push"){
+            int x; cin >> x;
+            s.push(x);
+        }else if(command == "pop"){
+            s.pop();
+        }else if(command == "top"){
+            s.top();
+        }
+    }
+}
+```
+
+
+
+
+
+
+### 2.1.2 栈的压入、弹出序列
+
+输入两个整数序列，第一个序列表示栈的压入顺序，请判断第二个序列是否可能为该栈的弹出顺序。
+假设压入栈的所有数字均不相等。例如序列1,2,3,4,5是某栈的压入顺序，序列4,5,3,2,1是该压栈序列对应的一个弹出序列，但4,3,5,1,2就不可能是该压栈序列的弹出序列。
+1. 0<=pushV.length == popV.length <=1000
+2. -1000<=pushV[i]<=1000
+3. pushV 的所有数字均不相同
+示例1
+输入：
+[1,2,3,4,5],[4,5,3,2,1]
+
+返回值：
+true
+
+说明：
+可以通过push(1)=>push(2)=>push(3)=>push(4)=>pop()=>push(5)=>pop()=>pop()=>pop()=>pop()
+这样的顺序得到[4,5,3,2,1]这个序列，返回true  
+
+示例2
+输入：
+[1,2,3,4,5],[4,3,5,1,2]
+
+返回值：
+false
+
+说明：
+由于是[1,2,3,4,5]的压入顺序，[4,3,5,1,2]的弹出顺序，要求4，3，5必须在1，2前压入，且1，2不能弹出，但是这样压入的顺序，1又不能在2之前弹出，所以无法形成的，返回false   
+
+```cpp
+
+class Solution {
+public:
+    /**
+     * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+     *
+     * 
+     * @param pushV int整型vector 
+     * @param popV int整型vector 
+     * @return bool布尔型
+     */
+
+    bool IsPopOrder(vector<int>& pushV, vector<int>& popV) {
+        int n = pushV.size();
+
+        int j =0;//pop序列下标
+
+        stack<int> s;//创建一个空栈
+
+
+        for(int i=0;i<n;i++){
+
+            if(s.top() != popV[j] || s.empty()){
+                s.push(pushV[i]);   //当前不能出栈, 继续循环
+            }else{
+                while(s.top() == popV[j] || !s.empty() ){ //pop到不能pop为止
+                    s.pop();//出栈
+                    j++;
+                }
+            }
+        }
+
+        //现在应该是空stack.
+        if(s.empty()){
+            return true; //合法序列
+        }else{
+            return false; //不合法序列
+        }
+    }
+
+};
+```
+
+
+
+
+
+
+
+
+
+
+
+
