@@ -1,5 +1,46 @@
 {
+    // by azazel. tasks.json v0.1.  2025/4/20
+
+
+    // ${}是VSCode的变量. 你可以在这里查看所有的变量: https://code.visualstudio.com/docs/editor/variables-reference
+    // 常用的有:
+
+    // ${workspaceFolder}  VS Code工作区的根目录. 当操作的文件就是当前工作区的文件时, ${workspaceFolder} == ${fileDirname}
+    // ${file}  当前打开的文件(完整路径), 如`F:\aza\code_git\CPP_8GU\test.cpp`
+    // ${fileDirname}  当前文件所在目录, 如`F:\aza\code_git\CPP_8GU`
+    // ${fileBasename}  当前文件名(带扩展名), 如`test.cpp`
+    // ${fileBasenameNoExtension}  当前文件名(不带扩展名)
+    // ${fileExtname}  当前文件扩展名
+    // ${relativeFile}  当前文件相对于工作区的路径
+    // ${relativeFileDirname}  当前文件所在目录相对于工作区的路径
+
     "tasks": [
+        {
+            "type": "cppbuild",
+
+            //"label": "C/C++: g++.exe 生成活动文件",
+            "label": "编译当前文件",
+
+            "command": "C:\\Users\\azazel\\mingw64\\bin\\g++.exe",//指定编译器
+            "args": [
+                "-fdiagnostics-color=always",
+                "-g",
+                "${file}",//要编译的文件
+                "-o",
+                "${fileDirname}\\${fileBasenameNoExtension}.exe"//指定生成exe文件的名字(此处为只改后缀) 和 路径(此处为当前文件所在目录)
+            ],
+            "options": {
+                "cwd": "${fileDirname}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "detail": "调试器生成的任务。"
+        },
         {
             "type": "cppbuild",
             "label": "C/C++: g++.exe 生成活动文件",
@@ -17,11 +58,8 @@
             "problemMatcher": [
                 "$gcc"
             ],
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            },
-            "detail": "调试器生成的任务。"
+            "group": "build",
+            "detail": "编译器: C:\\Users\\azazel\\mingw64\\bin\\g++.exe"
         }
     ],
     "version": "2.0.0"
