@@ -1,7 +1,44 @@
 {
-    // 使用 IntelliSense 了解相关属性。 
-    // 悬停以查看现有属性的描述。
-    // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
-    "version": "0.2.0",
-    "configurations": []
+    //by azazel. v0.1.  2025/4/20
+
+    // launch.json文件的结构: 
+    // "version": "xxx", "configurations": [{//onfig1}, {//config2}, ...]
+    "version": "0.2.0",     // 固定写法，调试配置版本号，不要改
+    "configurations": [     // 所有调试项的列表，可以配置多个调试项.
+
+        {
+            "name": "调试当前文件...using `launch.json` v0.1 by azazel :>",           // 在 VS Code 选择调试配置时显示的名字
+            "type": "cppdbg",               // 使用 C++ 调试器插件（vscode-cpptools）
+            "request": "launch",            // 表示“启动”调试（还有一种是"attach"）
+  
+            
+            // 下面这行很关键：调试当前打开的 cpp 文件自动生成的 .exe. `{fileDirname}`表示“当前文件所在目录”，`{fileBasenameNoExtension}`表示 “当前文件名（不带扩展名）”
+            "program": "${fileDirname}/${fileBasenameNoExtension}.exe", 
+            //"program": "${workspaceFolder}/test.exe",
+
+
+            "args": [],                     // 如果你需要给程序传参数，就写在这里（比如 ["arg1", "arg2"]）
+            "stopAtEntry": false,           // 是否在 main 函数前暂停
+            "cwd": "${fileDirname}",        // 工作目录（默认为当前源文件所在目录）
+
+            "environment": [],              // 环境变量设置
+            "externalConsole": true,        // 是否使用外部控制台运行（建议设为 true，看输出更方便）
+
+            "MIMode": "gdb",                // 指定使用 gdb 作为调试器(你要是有lldb就填lldb...)
+            "miDebuggerPath": "C:/Users/azazel/mingw64/bin/gdb.exe", // GDB 路径（怎麽查? powershell终端`Get-Command gdb`, 或者只看.source成员:`(Get-Command gdb).source`）
+
+            // setupCommands: 给调试器发送的预设命令. 
+            // 格式也是一个元组列表: [{//cmd1}, {//cmd2}, ...]
+            "setupCommands": [              // 启用 GDB 的“漂亮打印”，让你能看清 vector/map 等复杂结构
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+
+            //preLaunchTask: 调试前运行launch.json中指定的任务. 
+            "preLaunchTask": "编译当前文件"  // 调试前自动运行的任务. 它会调用task.json中的label为`编译当前文件`的task.
+        }
+    ]
 }
