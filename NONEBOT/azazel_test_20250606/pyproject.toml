@@ -1,0 +1,14 @@
+[project]
+name = "azazel_test_20250606"
+version = "0.1.0"
+description = "azazel_test_20250606"
+readme = "README.md"
+requires-python = ">=3.9, <4.0"
+
+[tool.nonebot]
+adapters = [
+    { name = "Console", module_name = "nonebot.adapters.console" }
+]
+plugins = []
+plugin_dirs = ["azazel_test_20250606/plugins"]
+builtin_plugins = ["echo"]
