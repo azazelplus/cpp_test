@@ -1,0 +1,14 @@
+help v1.0 here. :)
+
+launched plugins list:
+
+/help
+test
+/gpt, /chat, /ai
+/gpt_ds_r1, /chat_ds_r1, /ai_ds_r1
+/silicon_azazel
+/draw_stars, /stars, /planetary
+/tarot, /draw
+/draw_songs
+/关机, /shutdown
+/其他什麽的
