@@ -35,7 +35,7 @@ bool oldDeviceConnected = false;             //上次连接状态
 #define CHARACTERISTIC_UUID_RX "12a59e0a-17cc-11ec-9621-0242ac130002"
 #define CHARACTERISTIC_UUID_TX "12a5a148-17cc-11ec-9621-0242ac130002"
 
-#define COMPILE_BLE_DEBUG 0
+#define COMPILE_BLE_DEBUG 1
 #define COMPILE_WIFI_DEBUG 0
 
 class MyServerCallbacks : public BLEServerCallbacks
@@ -70,7 +70,7 @@ class MyCallbacks : public BLECharacteristicCallbacks
 void BLE_Init(void)
 {
     // 创建一个 BLE 设备
-    BLEDevice::init("UART_BLE");
+    BLEDevice::init("test_BLE");
 
     // 创建一个 BLE 服务
     pServer = BLEDevice::createServer();
@@ -88,7 +88,7 @@ void BLE_Init(void)
     Serial.println(" 等待一个客户端连接，且发送通知... ");
 }
 
-void BLE_LoopProc(void)
+void BLE_LoopProc(void)  
 {
     // deviceConnected 已连接
     if (deviceConnected)
@@ -134,6 +134,7 @@ void WiFi_Connect()
 void setup()
 {
     Serial.begin(115200);
+
 #if COMPILE_BLE_DEBUG
     BLE_Init();
 #endif
@@ -149,6 +150,6 @@ void loop()
     BLE_LoopProc();
 #endif
 
-    Serial.printf("Hello World\r\n");
+    //Serial.printf("Hello World\r\n");
     delay(200);
 }
