@@ -340,7 +340,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F10X_HD, USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\Libraries\CMSIS;..\..\User;..\..\Libraries\FWlib\inc;..\..\User\fafts\option;..\..\User\fafts</IncludePath>
+              <IncludePath>..\..\Libraries\CMSIS;..\..\User;..\..\Libraries\FWlib\inc;..\..\User\fafts\option;..\..\User\fafts;..\..\User\fafts;..\..\User\fafts\option</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -599,6 +599,16 @@
               <FileType>5</FileType>
               <FilePath>..\..\User\sdio\sdio_test.h</FilePath>
             </File>
+            <File>
+              <FileName>bsp_usart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\User\usart\bsp_usart.h</FilePath>
+            </File>
+            <File>
+              <FileName>bsp_led.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\User\led\bsp_led.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -633,6 +643,11 @@
               <FileName>integer.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\User\fafts\integer.h</FilePath>
+            </File>
+            <File>
+              <FileName>unicode.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\fafts\option\unicode.c</FilePath>
             </File>
           </Files>
         </Group>

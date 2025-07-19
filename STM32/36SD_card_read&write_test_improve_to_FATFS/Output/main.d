@@ -33,7 +33,6 @@
 ..\..\output\main.o: ..\..\User\./usart/bsp_usart.h
 ..\..\output\main.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 ..\..\output\main.o: ..\..\User\./led/bsp_led.h
-..\..\output\main.o: ..\..\User\./key/bsp_key.h
 ..\..\output\main.o: ..\..\User\fafts\ff.h
 ..\..\output\main.o: ..\..\User\fafts\integer.h
 ..\..\output\main.o: ..\..\User\fafts\ffconf.h
