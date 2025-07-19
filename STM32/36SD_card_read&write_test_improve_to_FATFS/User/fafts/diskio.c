@@ -15,7 +15,7 @@
 //disc.cÊÇ FatFs ÎÄ¼şÏµÍ³ÓÃÀ´ÓëÊµ¼ÊÓ²¼şÉè±¸£¨±ÈÈç SD ¿¨£©´ò½»µÀµÄµ×²ã½Ó¿ÚÊÊÅä²ã£¨glue layer£©¡£
 //FatFs ²»Ö±½Ó²Ù×÷Ó²¼ş£¬¶øÊÇÍ¨¹ıÕâĞ©Í³Ò»µÄ½Ó¿Ú¼ä½Ó·ÃÎÊÄã×Ô¼ºµÄÇı¶¯´úÂë¡£
 //Èç¹ûÄãÒªÓÃSD¿¨,×¼±¸ºÃ`bsp_sd_sdcard.c`ºÍ`bsp_sd_sdcard.h`, ÔÚÕâÀïinclude bsp_sd_sdcard.h, È»ºóÓÃÆäÖĞµÄ×´Ì¬¼ì²âº¯Êı°¡Ğ´º¯Êı°¡¶Áº¯Êı°¡¿ØÖÆº¯Êı°¡Ìî³äµ½discio.cÖĞ.
-
+#include <string.h>		//Ê¹ÓÃmumcpyÄÚ´æ¿½±´º¯Êı
 #include "diskio.h"		/* FatFs lower layer API */
 #include "ff.h"
 #include "./sdio/bsp_sdio_sdcard.h"
@@ -25,7 +25,7 @@
 #define SPI_FLASH		1     // Íâ²¿SPI Flash
 #define USB		2	/* Example: Map USB MSD to physical drive 2 */
 
-
+#define SD_BLOCKSIZE     512 
 
 //ÎÒÃÇÊ¹ÓÃÕâÈı¸öÊä³ö0µÄº¯Êı, ¼ÓÉÏÈıÖÖ¿¨Ã¿Ò»¸ö¶¼¼ÓÒ»¾ästat=result; ÊµÏÖÌø¹ıdisk_status¼ì²â²¿·Ö, ¼ÙÉèÉè±¸¶¼Õı³£.
 #define SKIP_DISK_STATUS 1
@@ -57,57 +57,26 @@ extern SD_CardInfo SDCardInfo;//ÕâÊÇbsp_sdio_sdcard.cÌá¹©µÄÒ»¸öÓÃÓÚ´æ´¢¿¨ĞÅÏ¢µÄ½
 
 
 /*-----------------------------------------------------------------------*/
-/* 1. Get Drive Status                                                      */
+/* 1.»ñÈ¡Éè±¸×´Ì¬                                                          */
 /*-----------------------------------------------------------------------*/
-//ºê¶¨ÒåÊı¾İÀàĞÍ: DSTATUS=BYTE=unsigned char.
-//Õâ¸ö¿ò¼ÜÌáÊ¾ÄãÊ¹ÓÃÒ»¸ö×Ô¼ºµÄATA/MMC/USB_disk_status()º¯Êı½«×´Ì¬ĞÅÏ¢¸ø±äÁ¿result, È»ºó½«resultµ÷Õûºó¸østatÊä³ö×÷Îª¼ì²â½á¹û. 
-//SD¿¨ÓÃ...Å¶ÎÒÃÇÌø¹ıÁË
 DSTATUS disk_status (
-	BYTE pdrv		/* Physical drive nmuber to identify the drive */
+	BYTE pdrv		/* ÎïÀí±àºÅ */
 )
 {
-	DSTATUS stat;
-	int result;
-
-	switch (pdrv) {
-	case ATA :
-		result = ATA_disk_status();
-
-		// translate the reslut code here
-
-/*********************************************/
-		#if SKIP_disk_status
-		stat=result;
-		#endif
-/*********************************************/
-
-		return stat;
-
-	case SPI_FLASH :
-		result = MMC_disk_status();
-
-		// translate the reslut code here
-/*********************************************/
-		#if SKIP_disk_status
-		stat=result;
-		#endif
-/*********************************************/
-		return stat;
-
-	case USB :
-		result = USB_disk_status();
-
-		// translate the reslut code here
-
-/*********************************************/
-		#if SKIP_disk_status
-		stat=result;
-		#endif
-/*********************************************/
+	DSTATUS status = STA_NOINIT;//Ä¬ÈÏ´íÎó¼ÙÉèÎªSTA_NOINIT 0x01, Î´³õÊ¼»¯.
 	
-		return stat;
+	switch (pdrv) {
+		case ATA:	/* SD CARD */
+			status &= ~STA_NOINIT;//±ä³É0x00.
+			break;
+    
+		case SPI_FLASH:        /* SPI Flash */   
+			break;
+
+		default:
+			status = STA_NOINIT;
 	}
-	return STA_NOINIT;//¶µµ×´íÎó
+	return status;
 }
 
 
@@ -155,9 +124,39 @@ DRESULT disk_read (
 )
 {
 	DRESULT status = RES_PARERR;//Ä¬ÈÏ´íÎó: statusÎªRES_PARERR(²ÎÊı´íÎó)
-	SD_Error sd_state;
+	SD_Error sd_state = SD_OK;
+	
+	
 	switch (pdrv) {
 		case ATA:	/* SD CARD */
+			
+		
+		
+//µØÖ·¶ÔÆë.Ğí¶à32Î»MCU£¨°üÀ¨STM32£©µÄDMA¿ØÖÆÆ÷ÒªÇóÄÚ´æµØÖ·4×Ö½Ú¶ÔÆë²ÅÄÜÕıÈ·/¸ßĞ§¹¤×÷!		
+//Èç¹û³öÏÖ·Ç¶ÔÆëµØÖ·Ê±£¬ĞèÒª½¨Á¢Ò»¸ö ÁÙÊ±¶ÔÆë»º³åÇø£¨scratch£©
+		  if((DWORD)buff&3)//¼ì²ébuffÖ¸ÕëÄÜ²»ÄÜ±»4Õû³ı. &3ºÍ%4ÊÇÒ»ÑùµÄ.
+			{
+				DRESULT res = RES_OK;
+				DWORD scratch[SD_BLOCKSIZE / 4];//´´½¨Ò»¸öuint8Êı×é×÷Îª¶ÔÆëµÄÁÙÊ±»º³åÇø
+
+				while (count--) 
+				{
+					res = disk_read(ATA,(void *)scratch, sector++, 1);//µ÷ÓÃ×Ô¼º,µİ¹é
+
+					if (res != RES_OK) 
+					{
+						break;
+					}
+					memcpy(buff, scratch, SD_BLOCKSIZE);
+					buff += SD_BLOCKSIZE;
+		    }
+		    return res;
+			}
+			
+			
+			
+			//Èç¹ûµØÖ·¶ÔÆëÁË:
+		
 		//SDCardInfo.CardBlockSize: SD¿¨µÄ¿é´óĞ¡, Îª512. 
 		//SD_ReadMultiBlocks()²ÎÊıÁĞ±í·Ö±ğÎª:¶ÁÈ¡´æ·ÅµÄÄÚ´æµØÖ·; Òª¶ÁÈ¡µÄµØÖ·; ¿é´óĞ¡; Òª¶ÁÈ¡µÄ¿éÊı.
 		//ËüÖ»ÊÇ·¢³öÃüÁî+ÅäÖÃDMA/SDIO£¬²»»á×èÈû¡£

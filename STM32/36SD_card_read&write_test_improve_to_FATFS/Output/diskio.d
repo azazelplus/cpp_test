@@ -1,4 +1,5 @@
 ..\..\output\diskio.o: ..\..\User\fafts\diskio.c
+..\..\output\diskio.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 ..\..\output\diskio.o: ..\..\User\fafts\diskio.h
 ..\..\output\diskio.o: ..\..\User\fafts\integer.h
 ..\..\output\diskio.o: ..\..\User\fafts\ff.h

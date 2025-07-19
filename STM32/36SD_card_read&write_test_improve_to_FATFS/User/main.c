@@ -19,7 +19,7 @@
 #include "./sdio/sdio_test.h"
 #include "./usart/bsp_usart.h"	
 #include "./led/bsp_led.h"
-#include "./key/bsp_key.h" 
+//#include "./key/bsp_key.h" 
 #include "ff.h"
 
 FATFS fs;													/* FatFs文件系统对象 */
@@ -28,7 +28,14 @@ FRESULT res_state;                /* 文件操作结果 */
 UINT fnum;            					  /* 文件成功读写数量 */
 BYTE ReadBuffer[1024]={0};        /* 读缓冲区 */
 BYTE WriteBuffer[] =              /* 写缓冲区*/
-"欢迎使用野火STM32开发板 今天是个好日子，新建文件系统测试文件\r\n"; 
+"summer is ending...\r\n"; 
+
+extern  SD_CardInfo SDCardInfo;//?????????
+
+
+
+
+
 
 int main(void)
 {
@@ -38,7 +45,7 @@ int main(void)
 	
 	/* 初始化调试串口，一般为串口1 */
 	USART_Config();	
-  printf("****** 这是一个SD卡文件系统实验 ******\r\n");
+  printf("\r\n\r\n\r\n****** 这是一个SD卡文件系统实验 ******\r\n");
 
 	
 	//初次尝试挂载. 如果成功(res_state == FR_NO_FILESYSTEM), 说明已经有文件系统, 不需要格式化
@@ -49,7 +56,7 @@ int main(void)
 	
 	
 	
-/*----------------------- 格式化测试 -----------------*/  
+/*----------------------- 1.格式化测试 -----------------*/  
 	
 	if(res_state == FR_NO_FILESYSTEM)/* 如果初次挂载失败, 返回错误码FR_NO_FILESYSTEM没有文件系统, 那麽尝试格式化+重新挂载 */
 	{
@@ -83,28 +90,32 @@ int main(void)
 	printf("请下载 SPI—读写串行FLASH 例程测试，如果正常，在该例程f_mount语句下if语句前临时多添加一句 res_state = FR_NO_FILESYSTEM; 让重新直接执行格式化流程\r\n");
 		while(1);
   }
-  else//如果初次挂载就成功了
+  else//如果res_state==FR_OK, 初次挂载就成功了
   {
     printf(">>>文件系统挂载成功，可以进行读写测试\r\n");
   }
   
-/*----------------------- 文件系统测试：写测试 -------------------*/
+	
+	
+	
+	
+/*----------------------- 2.文件系统测试：写测试 -------------------*/
 	/* 打开文件，每次都以新建的形式打开，属性为可写 */
-	printf("\r\n>>>即将进行文件写入测试... ******\r\n");	
-	res_state = f_open(&fnew, "0:FatFs_test.txt",FA_CREATE_ALWAYS | FA_WRITE );
+	printf("\r\n>>>Ready to conduct file write test... ******\r\n");	
+	res_state = f_open(&fnew, "0:test.txt",FA_CREATE_ALWAYS | FA_WRITE );//打开挂载在盘符`0`的文件`FatFs_test.txt`. 以写方式: 如果文件不存在, 新建文件. 如果文件存在, **删除旧文件内容.**
 	if ( res_state == FR_OK )
 	{
-		printf(">>>打开/创建FatFs读写测试文件.txt文件成功，向文件写入数据。\r\n");
+		printf(">>>fopen(write mode) create/open `0:FatFs_test.txt`: SUCCESS, now 向文件写入数据。\r\n");
     /* 将指定存储区内容写入到文件内 */
 		res_state=f_write(&fnew,WriteBuffer,sizeof(WriteBuffer),&fnum);
     if(res_state==FR_OK)
     {
-      printf(">>>文件写入成功，写入字节数据：%d\n",fnum);
+      printf(">>>f_write(): SUCCESS, 写入字节 data：%d\n",fnum);
       printf(">>>向文件写入的数据为：\r\n%s\r\n",WriteBuffer);
     }
     else
     {
-      printf("！！文件写入失败：(%d)\n",res_state);
+      printf("!!! f_write(): FAILED: (%d)\r\n",res_state);
     }    
 		/* 不再读写，关闭文件 */
     f_close(&fnew);
@@ -112,12 +123,16 @@ int main(void)
 	else
 	{	
 		LED_RED;
-		printf("！！打开/创建文件失败。\r\n");
+		printf("!!! fopen(): FAILED: (%d)\r\n",res_state);
 	}
 	
-/*------------------- 文件系统测试：读测试 --------------------------*/
-	printf(">>>即将进行文件读取测试... ******\r\n");
-	res_state = f_open(&fnew, "0:FatFs_test.txt",FA_OPEN_EXISTING | FA_READ);// 	 
+	
+	
+	
+	
+/*------------------- 3.文件系统测试：读测试 --------------------------*/
+	printf(">>>Ready to conduct file read test... ******\r\n");
+	res_state = f_open(&fnew, "0:test.txt",FA_OPEN_EXISTING | FA_READ);// 打开挂载在盘符`0`的文件`FatFs_test.txt`. 以只读方式(不创建也不清空)
 	if(res_state == FR_OK)
 	{
 		LED_GREEN;
@@ -130,13 +145,13 @@ int main(void)
     }
     else
     {
-      printf("！！文件读取失败：(%d)\n",res_state);
+      printf("!!! 文件读取失败：(%d)\n",res_state);
     }		
 	}
 	else
 	{
 		LED_RED;
-		printf(">>>opening the file failed. tvt \r\n");
+		printf(">>>!!! Opening the file: FAILED: (%d)\r\n",res_state);
 	}
 	/* 不再读写，关闭文件 */
 	f_close(&fnew);	
