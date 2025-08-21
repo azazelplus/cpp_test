@@ -1,0 +1,44 @@
+#Makefile的作用域为current文件夹. 
+#this Makefile 基本设置好了在当前文件夹下编译.c和.cpp的规则.
+
+#变量定义
+CC = gcc
+CXX = g++
+
+CFLAGS = -Wall -g
+CXXFLAGS = -Wall -g
+
+
+#清理生成的文件
+clean:
+	rm -f *.o $(TARGETS)
+
+
+
+#patsubst即pattern substitution, makefile中的字符串模式替换函数, 格式为$(patsubst <pattern>, <replacement>, <text>)
+#wildcard即makefile中的万用字符函数, 格式为$(wildcard <表达式>)
+
+#查找`.c`和`.cpp`文件作为源文件.
+SRC_C = $(wildcard *.c)
+SRC_CPP = $(wildcard *.cpp)
+
+#生成对应可执行文件名, 其实就是把`.c`和`.cpp`去掉. 模式替换语法为`字符串`:<某个部分>=<要替换的部分>
+EXE_C = $(SRC_C:.c=)
+EXE_CPP = $(SRC_CPP:.cpp=)
+
+TARGETS = $(EXE_C) $(EXE_CPP)
+
+#默认目标
+all:$(TARGETS)
+
+
+
+# % 通配符表示任何字符串. $@ 表示当前规则的目标文件. $< 表示规则中第一个依赖文件.
+
+# 生成`.c`文件的目标
+%:%.c
+	$(CC) $(CFLAGS)  -o $@ $<
+
+# 生成`.cpp`文件的目标
+%:%.cpp
+	$(CXX) $(CXXFLAGS)  -o $@ $<

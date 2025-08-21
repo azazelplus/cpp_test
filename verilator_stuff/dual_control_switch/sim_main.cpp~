@@ -1,0 +1,48 @@
+
+//verilator不提供自动仿真功能, 需要cpp代码驱动, 这就是对每个.v模块文件的sim.main.cpp的作用.
+#include <stdio.h>	
+#include <stdlib.h>
+#include <assert.h>
+#include "Vtop.h"	//verilator自动生成的头文件,运行verilator --cc witch.v后自动生成, 在obj_dir目录下.
+#include "verilated.h"	//同上
+
+int main(int argc, char** argv){
+	//verilator运行环境初始化
+	VerilatedContext* contextp = new VerilatedContext;
+
+	//创建Vtop实例(模拟器的top module)
+	Vtop* top = new Vtop(contextp);
+
+	//循环执行仿真
+	while(!contextp->gotFinish()){	//until gotFinish()==1, means the end of sim
+		//生成随机输入信号.
+		int a = rand() & 1;	//rand()返回一个大整数, 如`00110000000111001`. 和1进行&运算时只取最低位, 由于0&1=0,1&1=1, 而最低位随机, 所以`rand()&1`可以随即给出0或1.
+		int b = rand() &1;
+		top->a = a;	//传递给verilog模块
+		top->b = b;
+		top->eval();	//run sim
+		printf("a = %d, b = %d, f = %d \n, a, b, top->f");
+		assert(top->f == (a^b));	//assertion检查XOR计算是否正确.		`
+	}
+	delete top;
+	delete contextp;
+	return 0;
+}
+
+
+
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																												
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

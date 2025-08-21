@@ -1,0 +1,22 @@
+#include <iostream>
+#include <fstream>
+#include <vector>
+#include <string>
+#include <stdexcept>
+
+using namespace std;
+
+#define MAX_DATA 512
+#define MAX_ROWS 100
+
+
+
+class Address{
+public:
+	int id;
+	bool set;
+	string name;
+	string email;
+
+	Address(int id = 0; )
+}
