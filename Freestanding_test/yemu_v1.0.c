@@ -11,12 +11,19 @@
 #include <assert.h>
 #include <errno.h>
 #include <string.h>
+#include <stdlib.h> //exit()
 
 
 
 
 //自定义断言宏, 便于调试. 比assert多了打印信息和行号.
 //用法: Perror(fp != NULL, "open %s failed", "config.txt");
+//例子:
+// azazel@DESKTOP-NJKSK6O:~/Code_git/Freestanding_test$ ./yemu_v1.0.out nullexist
+// Assertion failed: fp != ((void *)0)
+// Message: Failed to open file: nullexist: No such file or directory
+// File: yemu_v1.0.c, Line: 92
+
 
 //do while(0)是个常见的宏定义技巧. 只执行一次, 而且整个宏用大括号, 内部if和else不会不小心匹配到外面的东西.
 //stderr, 全局指针. 指向标准错误输出流.
@@ -29,27 +36,37 @@
 //__VA_ARGS__是C99标准引入的, 用于表示可变参数宏中的所有参数.
 //##__VA_ARGS__ 是个小技巧：如果宏调用时没有额外参数，编译器会把前面的逗号去掉。
 //"format : %s"是个字符串字面量拼接.
-#define Assert(expr, msg, ...) \
-    do { \
-        if (!(expr)) { \
-            fprintf(stderr, "Assertion failed: %s\nMessage: " msg "\nFile: %s, Line: %d\n", \
-                    #expr, ##__VA_ARGS__, __FILE__, __LINE__); \
+//errno是全局变量, 是最近一次失败的错误码. strerror()函数根据错误码返回对应的错误信息字符串.
+#define Assert(cond, msg, ...)                      \
+    do {                                            \
+        if (!(cond)) {                              \
+            fprintf(stderr,                         \
+                "                                   \
+                Assertion failed: %s\n              \
+                Message: " msg " \n                 \
+                File: %s,                           \
+                Line: %d\n                          \
+                ",                                  \
+                #cond, ##__VA_ARGS__, __FILE__, __LINE__); \
             exit(1); \
         } \
     } while (0)
 
-#define Perror(cond, format, ...) \
-    Assert(cond, format ": %s", ##__VA_ARGS__, strerror(errno))
+#define Perror(cond, msg, ...) \
+    Assert(cond, msg ": %s", ##__VA_ARGS__, strerror(errno))
 
+
+#define MSIZE 64 //内存大小, 64byte 
+#define RSIZE 32 //寄存器数量, 32个寄存器
 
 
 
 //PC寄存器.
-uint32_t R[32], PC;
+uint32_t R[RSIZE], PC;
 
 //我们分配出64byte的内存. 是的, 这非常小.
 //它初始存放的数据就是那个最简单prog.c, 也就是_start()函数的汇编指令, 一共7条.
-uint8_t M[64] = {
+uint8_t M[MSIZE] = {
     0x13, 0x05, 0x00, 0x00, 0x93, 0x05, 0x10, 0x04, 0x73, 0x00, 0x10, 0x00,
     0x13, 0x05, 0x10, 0x00, 0x93, 0x05, 0x00, 0x00, 0x73, 0x00, 0x10, 0x00,
     0x67, 0x00, 0x00, 0x00
@@ -85,17 +102,17 @@ int main(int argc, char *argv[]) {
     R[0] = 0; // can be omitted since uninitialized global variables are initialized with 0 in C.
 
     //读取程序到内存M. super defensive programming!!!!!
-    assert(argc >= 2); //检查是否提供了输入文件名.
+    Perror(argc >= 2, "No input file specified"); //检查是否提供了输入文件名.
     FILE *fp = fopen(argv[1], "r");
-    assert(fp != NULL); //检查文件是否成功打开.
+    Perror(fp != NULL, "Failed to open file: %s", argv[1]); //检查文件是否成功打开.
     int ret = fseek(fp, 0, SEEK_END);   //fseek()函数用于移动文件指针到文件的指定位置. 这里我们将文件指针移动到文件末尾.
-    assert(ret != -1);  //检查fseek是否成功.
+    Perror(ret != -1, "Failed to seek to end of file");  //检查fseek是否成功.
     long fsize = ftell(fp); //ftell()函数返回当前文件指针的位置. 由于我们之前将文件指针移动到了文件末尾, 因此这里返回的就是文件的大小.
-    assert(fsize != -1); //检查ftell是否成功.
+    Perror(fsize != -1, "Failed to get file size"); //检查ftell是否成功.
     rewind(fp); //将文件指针重新定位到文件开头.
-    assert(fsize < 1024); //检查文件大小是否小于1024字节.
+    Perror(fsize < 1024, "File size exceeds limit"); //检查文件大小是否小于1024字节.
     ret  = fread(M, 1, fsize, fp); //fread()函数从文件中读取数据. 这里我们将文件的内容读取到内存M中.
-    assert(ret == fsize); //检查是否完整读取了预期数量的字节
+    Perror(ret == fsize, "Failed to read file"); //检查是否完整读取了预期数量的字节
     fclose(fp);
 
 
