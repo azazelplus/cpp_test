@@ -1,0 +1,15 @@
+top=mux4to1_2bit
+
+# 控制端 Y: 使用板上拨码开关 SW1 (MSB), SW0 (LSB)
+Y ( SW1, SW0 )
+
+# SW2—SW9作为四个两位数据输入端X0–X3
+# 注意括号内顺序是 MSB -> LSB（高位在前，低位在后）
+X0 ( SW3, SW2 )
+X1 ( SW5, SW4 )
+X2 ( SW7, SW6 )
+X3 ( SW9, SW8 )
+
+# 输出 F (2 bit) 绑定到板上两个 LED（MSB -> LSB）
+# 这里示例使用板上常见的 LED 名称 LD1, LD0；如果你的板子用 LEDR/LEDR0 等名字请改成那种
+F ( LD1, LD0 )

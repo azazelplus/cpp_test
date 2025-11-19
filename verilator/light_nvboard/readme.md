@@ -11,7 +11,7 @@
 ## 1. 准备**.v文件**; **仿真cpp文件**; **约束nxdc文件**; **Makefile**
 
 首先, 建立这样的文件结构:
-.
+```
 ├── vsrc
 │   └── top_name.v
 ├── csrc
@@ -19,12 +19,12 @@
 ├── constr
 │   └── top_name.nxdc
 └── Makefile
-
+```
 * 其中,top_name.v的格式就那样, 不需要写仿真模块, 输入输出必须是wire.
 
 * 其中,top_name.cpp的格式是直接抄袭nvboard文件夹的example项目的. 改一下top_name为自己的即可.
 
-* 其中, .nxdr的格式参考文档. 绑定好你的.v文件夹输入输出信号到FPGA板子上.
+* 其中, .nxdc的格式参考文档. 绑定好你的.v文件夹输入输出信号到FPGA板子上.
 
 **(经验证auto_bind.cpp是包含在make规则里的, 不需要手动运行脚本生成.)**
 * 然后在constr/目录下运行来自nvboard提供的自动生成约束.cpp文件的py脚本`auto_bind.cpp`:
