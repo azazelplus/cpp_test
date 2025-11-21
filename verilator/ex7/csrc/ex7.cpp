@@ -34,9 +34,6 @@ using namespace std;
 //.dump()将当前仿真状态写入波形文件,
 //.信号名()获取或设置clk信号的值.
 
-// Verilator 会根据你的顶层模块（top）的输入输出端口名来生成 C++ 类的成员变量。
-// 注意!!!!!如果你使用别的输入端口充当clk, 那麽clk成员的名字就是那个top的端口, 比如ex7本例中, clk 其实是 BTNC. 
-// !!!在这种情况下single_cycle()里直接使用    dut.eval(); 千万不要再手动翻转clk!
 
 //是否有clk. 组合逻辑和时序逻辑的single_cycle函数不同.
 #define HAS_CLOCK 1
@@ -48,19 +45,26 @@ void nvboard_bind_all_pins(V_MODULE_NAME* top);  //绑定引脚的声明.
 
 // single cycle simulation
 static void single_cycle(){
-    // 这里的改动是关键：
-    // 原来的代码会自动翻转 BTNC 模拟时钟，导致跑得飞快。
-    // 现在我们删除了自动翻转代码，让 BTNC 完全由 NVBoard (即按钮) 控制。
+#if HAS_CLOCK
+    // 时序电路：产生一个时钟上升沿/下降沿的完整周期（0->1）
+    // 要求 DUT 有成员 dut.clk
+    dut.clk = 0;
     dut.eval();
+    dut.clk = 1;
+    dut.eval();
+#else
+    // 组合电路：只需评估一次
+    dut.eval();
+#endif
 }
 
 
 #if HAS_CLOCK
 // rst函数. 持续复位状态n个周期,然后解除. 组合逻辑没有rst.
 static void reset(int n){
-    dut.SW0 = 1;
+    dut.rst = 1;
     while (n-->0) single_cycle();   //while(n-->0)是一种简写, 意思是for(; n==0 ;n--)
-    dut.SW0 = 0;
+    dut.rst = 0;
 }
 #endif
 

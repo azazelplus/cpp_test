@@ -10,24 +10,16 @@
 Vtop::Vtop(VerilatedContext* _vcontextp__, const char* _vcname__)
     : VerilatedModel{*_vcontextp__}
     , vlSymsp{new Vtop__Syms(contextp(), _vcname__, this)}
-    , BTNC{vlSymsp->TOP.BTNC}
-    , SW0{vlSymsp->TOP.SW0}
-    , SEG0A{vlSymsp->TOP.SEG0A}
-    , SEG0B{vlSymsp->TOP.SEG0B}
-    , SEG0C{vlSymsp->TOP.SEG0C}
-    , SEG0D{vlSymsp->TOP.SEG0D}
-    , SEG0E{vlSymsp->TOP.SEG0E}
-    , SEG0F{vlSymsp->TOP.SEG0F}
-    , SEG0G{vlSymsp->TOP.SEG0G}
-    , DEC0P{vlSymsp->TOP.DEC0P}
-    , SEG1A{vlSymsp->TOP.SEG1A}
-    , SEG1B{vlSymsp->TOP.SEG1B}
-    , SEG1C{vlSymsp->TOP.SEG1C}
-    , SEG1D{vlSymsp->TOP.SEG1D}
-    , SEG1E{vlSymsp->TOP.SEG1E}
-    , SEG1F{vlSymsp->TOP.SEG1F}
-    , SEG1G{vlSymsp->TOP.SEG1G}
-    , DEC1P{vlSymsp->TOP.DEC1P}
+    , clk{vlSymsp->TOP.clk}
+    , rst{vlSymsp->TOP.rst}
+    , ps2_clk{vlSymsp->TOP.ps2_clk}
+    , ps2_data{vlSymsp->TOP.ps2_data}
+    , seg0{vlSymsp->TOP.seg0}
+    , seg1{vlSymsp->TOP.seg1}
+    , seg2{vlSymsp->TOP.seg2}
+    , seg3{vlSymsp->TOP.seg3}
+    , seg4{vlSymsp->TOP.seg4}
+    , seg5{vlSymsp->TOP.seg5}
     , rootp{&(vlSymsp->TOP)}
 {
     // Register model with the context

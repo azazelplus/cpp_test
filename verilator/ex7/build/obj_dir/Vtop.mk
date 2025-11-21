@@ -4,7 +4,7 @@
 # Execute this makefile from the object directory:
 #    make -f Vtop.mk
 
-default: /home/azazel/Code_git/verilator/ex6/build/top
+default: /home/azazel/Code_git/verilator/ex7/build/top
 
 ### Constants...
 # Perl executable (from $PERL)
@@ -52,12 +52,12 @@ VM_USER_LDLIBS = \
 # User .cpp files (from .cpp's on Verilator command line)
 VM_USER_CLASSES = \
 	auto_bind \
-	ex2 \
+	ex7 \
 
 # User .cpp directories (from .cpp's on Verilator command line)
 VM_USER_DIR = \
-	/home/azazel/Code_git/verilator/ex6/build \
-	/home/azazel/Code_git/verilator/ex6/csrc \
+	/home/azazel/Code_git/verilator/ex7/build \
+	/home/azazel/Code_git/verilator/ex7/csrc \
 
 
 ### Default rules...
@@ -69,13 +69,13 @@ include $(VERILATOR_ROOT)/include/verilated.mk
 ### Executable rules... (from --exe)
 VPATH += $(VM_USER_DIR)
 
-auto_bind.o: /home/azazel/Code_git/verilator/ex6/build/auto_bind.cpp
+auto_bind.o: /home/azazel/Code_git/verilator/ex7/build/auto_bind.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
-ex2.o: /home/azazel/Code_git/verilator/ex6/csrc/ex2.cpp
+ex7.o: /home/azazel/Code_git/verilator/ex7/csrc/ex7.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
 
 ### Link rules... (from --exe)
-/home/azazel/Code_git/verilator/ex6/build/top: $(VK_USER_OBJS) $(VK_GLOBAL_OBJS) $(VM_PREFIX)__ALL.a $(VM_HIER_LIBS)
+/home/azazel/Code_git/verilator/ex7/build/top: $(VK_USER_OBJS) $(VK_GLOBAL_OBJS) $(VM_PREFIX)__ALL.a $(VM_HIER_LIBS)
 	$(LINK) $(LDFLAGS) $^ $(LOADLIBES) $(LDLIBS) $(LIBS) $(SC_LIBS) -o $@
 
 
