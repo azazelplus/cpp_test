@@ -1,20 +1,24 @@
 #include "stm32f10x.h"
 #include "OLED_Font.h"
+#include "OLED.h"
 
-/*SCL和SDA的引脚定义*/
-
-#define OLED_SCL_PORT     GPIOB
-#define OLED_SCL_PIN      GPIO_Pin_8
-
-#define OLED_SDA_PORT     GPIOB
-#define OLED_SDA_PIN      GPIO_Pin_9
-
-#define OLED_W_SCL(x)		GPIO_WriteBit(OLED_SCL_PORT, OLED_SCL_PIN, (BitAction)(x))
-#define OLED_W_SDA(x)		GPIO_WriteBit(OLED_SDA_PORT, OLED_SDA_PIN, (BitAction)(x))
 
 /*引脚初始化. 开RCC时钟+把SCL和SDA引脚都初始化为开漏输出模式.*/
 void OLED_I2C_Init(void)
 {
+	
+	
+	
+	
+		uint32_t i, j;
+	
+	/*在初始化前，加入适量延时，待OLED供电稳定, 否则会出错!!!!!!!!*/
+	for (i = 0; i < 1000; i ++)
+	{
+		for (j = 0; j < 1000; j ++);
+	}
+	
+	
     RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE);
 	
 	GPIO_InitTypeDef GPIO_InitStructure;
@@ -25,8 +29,10 @@ void OLED_I2C_Init(void)
 	GPIO_InitStructure.GPIO_Pin = OLED_SDA_PIN;
  	GPIO_Init(OLED_SDA_PORT, &GPIO_InitStructure);
 	
-	OLED_W_SCL(1);
-	OLED_W_SDA(1);
+	//GPIO_SetBits(GPIOB,OLED_SCL_PIN | OLED_SDA_PIN);	//我加上这一句后程序可以正常运行
+
+	GPIO_WriteBit(OLED_SCL_PORT, OLED_SCL_PIN, (BitAction)(1));
+	GPIO_WriteBit(OLED_SDA_PORT, OLED_SDA_PIN, (BitAction)(1));
 }
 
 /**

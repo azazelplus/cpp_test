@@ -1,0 +1,48 @@
+top = dual_control_switch
+# top=顶层模块名，要和 top.v 里 module 后的名字一致
+
+
+
+
+#端口名 + 版上资源名
+a SW0       # 端口 a ↔ 拨码开关 SW0
+b SW1       # 端口 b ↔ 拨码开关 SW1
+f LD0     # 端口 f ↔ LED 灯 LD0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
